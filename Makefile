@@ -17,6 +17,6 @@ test:
 		test/unit.js
 
 test-browser:
-	@open "http://127.0.0.1:3000/test/" & ./node_modules/.bin/serve . 
+	@open "http://127.0.0.1:3000/test/" & ./node_modules/.bin/serve .
 
 .PHONY: test
