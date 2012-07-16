@@ -16,7 +16,7 @@ If you'd like to run this locally, you'll need node.js:
 
 ### To install
 
-`git clone git@github.com:SlexAxton/messageform.at.git && cd messageform.at && npm install`
+`git clone git@github.com:SlexAxton/messageform.at.git && cd messageform.at`
 
 ### To serve (dev mode)
 
