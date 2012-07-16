@@ -10,6 +10,32 @@ I'd like this to be a resource for people learning how to write well-formatted m
 
 I'd also like this to be usable for translators who don't need to know the actual messageformat syntax. It's well thought out for programmers, but unfortunately leaves translators a bit in the dust.
 
+## Running
+
+If you'd like to run this locally, you'll need node.js:
+
+### To install
+
+`git clone git@github.com:SlexAxton/messageform.at.git`
+
+`npm install`
+
+### To serve (dev mode)
+
+`make serve`
+
+Then visit http://127.0.0.1:3000/
+
+### To Build
+
+`make`
+
+### To Serve the build
+
+`make install`
+
+Then visit http://127.0.0.1:3000/
+
 ## License
 
 Use: [WTFPL](http://sam.zoy.org/wtfpl/)
