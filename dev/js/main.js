@@ -1,8 +1,16 @@
 require({
-  shim : {
+  "paths": {
+    "template": "../template"
+  },
+  'shim' : {
     'underscore': {
       exports : function () {
         return this._;
+      }
+    },
+    'handlebars': {
+      exports : function () {
+        return this.Handlebars;
       }
     },
     'backbone' : {
@@ -13,7 +21,7 @@ require({
       }
     }
   }
-},['jquery', 'underscore', 'backbone'], function ($, _, Backbone) {
-  console.log($, _, Backbone);
+},['hbs!template/base'], function (tmpl) {
+  console.log(tmpl());
   return {};
 });

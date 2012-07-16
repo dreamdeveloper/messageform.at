@@ -9,7 +9,10 @@
     "template": "../template"
   },
   "pragmasOnSave": {
-    "excludeDev": true
+    "excludeDev": true,
+    "excludeHbsParser" : true,
+    "excludeHbs" : true,
+    "excludeAfterBuild" : true
   },
   "pragmas": {
     "testingExcludeBeforeSave": true
@@ -30,6 +33,11 @@
       "exports" : function (_, $) {
         this._.noConflict();
         return this.Backbone.noConflict();
+      }
+    },
+    "handlebars": {
+      exports : function () {
+        return this.Handlebars;
       }
     }
   }
