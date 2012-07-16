@@ -24,7 +24,8 @@ define([
         fetchText = function () {
             throw new Error('Environment unsupported.');
         },
-        buildMap = [],
+        i18nDeps,
+        buildMap = {},
         filecode = "w+",
         templateExtension = "hbs",
         customNameExtension = "@hbs",
@@ -120,17 +121,30 @@ define([
         },
 
         write: function (pluginName, name, write) {
+          if ((name+customNameExtension) in buildMap) {
+            var text = buildMap[name+customNameExtension];
 
-            if ( (name + customNameExtension ) in buildMap) {
-                var text = buildMap[name + customNameExtension];
-                write.asModule(pluginName + "!" + name, text);
+            // Pretty hacky way to figure out if this has message deps
+            var defineText = text.match(/define\([^)]*\)/g)[0];
+            var matches = [];
+            if ( defineText ) {
+              matches = defineText.match(/'_i18n_[^']*/g);
             }
+            if ( matches && matches.length ) {
+              _( matches ).forEach(function( match ) {
+                var msgModName = match.substr( 1, match.length-1 );
+                write.asModule( msgModName,  buildMap[ msgModName + '@i18n' ] );
+              });
+            }
+            write.asModule(pluginName + "!" + name, text);
+          }
         },
 
         version: '1.0.3beta',
 
         load: function (name, parentRequire, load, config) {
           //>>excludeStart('excludeHbs', pragmas.excludeHbs)
+            var modWrite = this.write;
 
             var compiledName = name + customNameExtension,
                 disableI18n = (config.hbs && config.hbs.disableI18n),
@@ -264,7 +278,7 @@ define([
                 res = recursiveVarSearch( nodes.statements, [], undefined, helpersres );
               }
 
-              var defaultHelpers = ["helperMissing", "blockHelperMissing", "each", "if", "unless", "with"];
+              var defaultHelpers = ["helperMissing", "blockHelperMissing", "each", "if", "unless", "with", "_"];
 
               return {
                 vars : _(res).chain().unique().map(function(e){
@@ -376,12 +390,25 @@ define([
                                       "t.vars = " + JSON.stringify(vars) + ";\n";
                   }
 
+                  // ast, mapping, buildMap, load, write, config, parentRequire, i18nDeps
+                  i18nDeps = [];
                   var mapping = disableI18n? false : _.extend( langMap, config.localeMapping ),
-                      prec = precompile( text, mapping, { originalKeyFallback: (config.hbs || {}).originalKeyFallback });
+                      prec = precompile(nodes, mapping, buildMap, load, modWrite, config, parentRequire, i18nDeps);
+
+                  var hprecomp = function (ast, options) {
+                    options = options || {};
+                    var environment = new Handlebars.Compiler().compile(ast, options);
+                    return new Handlebars.JavaScriptCompiler().compile(environment, options);
+                  };
+
+                  var i18nDepStr = i18nDeps.join("', '");
+                  if ( i18nDepStr ) {
+                    i18nDepStr = ", '" + i18nDepStr + "'";
+                  }
 
                   text = "/* START_TEMPLATE */\n" +
-                         "define(['hbs','handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
-                           "var t = Handlebars.template(" + prec + ");\n" +
+                         "define(['hbs','handlebars'"+depStr+helpDepStr+i18nDepStr+"], function( hbs, Handlebars ){ \n" +
+                           "var t = Handlebars.template(" + hprecomp(prec, _.extend({},config)) + ");\n" +
                            "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
                            debugProperties +
                            "return t;\n" +
