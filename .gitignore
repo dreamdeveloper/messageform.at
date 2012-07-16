@@ -1,3 +1,7 @@
+# App specific
+
+build/*
+
 # Numerous always-ignore extensions
 *.diff
 *.err
