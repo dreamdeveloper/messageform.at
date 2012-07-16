@@ -24,12 +24,14 @@
     "backbone" :  "0.9.x",
     "messageformat" : "0.1.x",
     "requirejs" : "2.0.x",
-    "underscore" : "1.3.x"
+    "underscore" : "1.3.x",
+    "stylus" : "*"
   },
   "noAnalyze": true,
   "devDependencies": {
     "mocha"    :  "*",
-    "expect.js" :  "*"
+    "expect.js" :  "*",
+    "serve" : "*"
   },
   "license": "WTFPL",
   "engine": {
