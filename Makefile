@@ -1,13 +1,14 @@
 REPORTER = dot
 
-serve:
-	@./node_modules/.bin/stylus --inline --include-css -l -w ./dev/css & ./node_modules/.bin/serve ./dev
-
-build-app:
+default:
 	@./node_modules/requirejs/bin/r.js -o dev/js/app.build.js
+	@rm -f ./build/css/*.styl
 
-serve-build:
-	@./node_modules/.bin/serve ./build
+serve:
+	@./node_modules/.bin/serve ./dev
+
+install:
+	@./node_modules/.bin/serve -S ./build
 
 test:
 	@./node_modules/.bin/mocha \
