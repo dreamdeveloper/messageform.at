@@ -34,11 +34,6 @@
         this._.noConflict();
         return this.Backbone.noConflict();
       }
-    },
-    "handlebars": {
-      exports : function () {
-        return this.Handlebars;
-      }
     }
   }
 })

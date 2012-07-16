@@ -8,11 +8,6 @@ require({
         return this._;
       }
     },
-    'handlebars': {
-      exports : function () {
-        return this.Handlebars;
-      }
-    },
     'backbone' : {
       deps : ['underscore', 'jquery'],
       exports : function (_, $) {
