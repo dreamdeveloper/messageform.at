@@ -16,7 +16,7 @@ require({
       }
     }
   }
-},['env', 'backbone', 'view/App', 'model/App'], function (env, Backbone, AppView, AppModel) {
+},['env', 'backbone', 'view/App', 'model/App', 'jquery', 'util/caret'], function (env, Backbone, AppView, AppModel, $) {
 
   var router;
 
