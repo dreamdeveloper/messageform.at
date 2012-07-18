@@ -1,21 +1,33 @@
-define(['backbone', 'env', 'jquery', 'hbs!template/base'], function (Backbone, env, $, template) {
+define(['backbone', 'env', 'jquery', 'util/linecount', 'hbs!template/base'], function (Backbone, env, $, linecount, template) {
   return Backbone.View.extend({
     initialize : function (options) {
       this.template = template;
     },
+    options : {
+      linecount : {
+        charsMode : 'from_ta',
+        fontAttrs : ['font-family', 'font-size', 'text-decoration', 'font-style', 'font-weight']
+      }
+    },
     events : {
       'focus .placeholder-on' : 'inputfocus',
       'blur .placeholder-off' : 'inputblur',
-      'change textarea' : 'inputchange'
+      'keyup textarea' : 'inputchange'
     },
     inputchange : function (e) {
       var $target = $(e.currentTarget);
       var val = $target.val();
 
+      // Don't count the placeholder as a value
       if ($target.hasClass('placeholder-on')) {
         val = '';
       }
-      console.log(val);
+
+      // Constantly update the model
+      this.model.set('message', val);
+
+      // Determin the line count of the text area.
+      console.log(linecount($target, this.options.linecount));
     },
     inputfocus : function (e) {
       var $target = $(e.currentTarget);
@@ -33,9 +45,11 @@ define(['backbone', 'env', 'jquery', 'hbs!template/base'], function (Backbone, e
     },
     inputblur : function (e) {
       var $target = $(e.currentTarget);
-      if ( !$.trim($target.val()) ) {
+      var val = $.trim($target.val());
+      if (!val) {
         $target.removeClass('placeholder-off').addClass('placeholder-on').val(this.model.get('inputplaceholder'));
       }
+      this.model.set('message', val);
     },
     render : function () {
       var self = this;
