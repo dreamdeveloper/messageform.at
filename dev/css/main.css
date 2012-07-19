@@ -3,11 +3,11 @@
 #mf-input {
   display: block;
   width: 90%;
+  height: auto;
   margin: 60px 0;
   padding: 10px;
   font-size: 42px;
   line-height: 52px;
-  text-align: center;
   border: 3px solid #ccc;
   box-shadow: 0 0 5px #aaa;
 }

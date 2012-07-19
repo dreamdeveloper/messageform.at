@@ -3,7 +3,7 @@
   "dir": "../../build",
   "baseUrl": "js/",
   "optimizeCss": "standard",
-  "optimize": "none",
+  "optimize": "uglify",
   "inlineText": true,
   "paths": {
     "template": "../template"
