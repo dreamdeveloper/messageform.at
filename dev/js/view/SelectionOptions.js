@@ -1,10 +1,12 @@
-define(['env', 'backbone', 'underscore', 'hbs!template/SelectionOptionsPopup', 'messageformat', 'util/mfintrospect'], function (env, Backbone, _, tmpl, MessageFormat, mfi) {
+define(['env', 'backbone', 'underscore', 'hbs!template/SelectionOptionsPopup', 'hbs!template/preview', 'messageformat', 'util/mfintrospect'], function (env, Backbone, _, tmpl, previewTemplate, MessageFormat, mfi) {
 
   return Backbone.View.extend({
     initialize : function (opts) {
       this.template = tmpl;
       this.mf = new MessageFormat(env.get('locale'));
       this.model.set('plural_keywords', this.calculateKeys());
+
+
 
       this.accent();
     },
@@ -51,6 +53,22 @@ define(['env', 'backbone', 'underscore', 'hbs!template/SelectionOptionsPopup', '
       );
     },
 
+    permutate : function (n, from, got, res) {
+      res = res || [];
+      got = got || [];
+      var cnt = 0;
+      if (got.length == n) {
+        res.push(_(got.join('-').split('-')).map(function (x){ return parseInt(x, 10); }));
+        return 1;
+      }
+      for (var i = 0; i < from.length; i++) {
+        got.push(from[i]);
+        cnt += this.permutate(n, from, got, res);
+        got.pop();
+      }
+      return res;
+    },
+
     renderPreview : _.debounce(function () {
       var self = this;
       var fulltext = self.model.get('fulltext');
@@ -59,23 +77,38 @@ define(['env', 'backbone', 'underscore', 'hbs!template/SelectionOptionsPopup', '
 
       var tryCompile = fulltext.substr(0, start) + self.buildPluralForm() + fulltext.substr(end);
 
+      var message = this.mf.compile(tryCompile);
       var mfVars = mfi.getVariables(tryCompile);
+      var variables = mfVars.plural;
+      var nums = this.getRelevantNumbers(this.calculateKeys());
 
-      var perms = [];
-      _(mfVars.plural).forEach(function (varname) {
-        var outs = [];
-        _(mfVars.plural).forEach(function (varname2) {
-          if ( varname !== varname2 ) {
-            _(this.calculateKeys()).forEach(function (k, idx) {
-              _(k.nums).forEach(function (num) {
-                outs.push();
-              });
-            });
-          }
+      var datasets = [];
+      _(this.permutate(variables.length, nums)).forEach(function (vals) {
+        var data = {};
+        _(variables).forEach(function (vari, idx) {
+          data[vari] = vals[idx];
+        });
+        datasets.push(data);
+      });
+
+      var renderedMessages = _(datasets).map(function (data) {
+        return message(data);
+      });
+
+      this.$preview.html(previewTemplate({ messages : renderedMessages }));
+
+    }, 400),
+
+    getRelevantNumbers : function (keySet) {
+      var res = [];
+      _(keySet).forEach(function (key) {
+        _(key.nums).forEach(function (num) {
+          res.push(num);
         });
       });
 
-    }, 400),
+      return res;
+    },
 
     calculateKeys : function () {
       var keys = {};
@@ -112,6 +145,7 @@ define(['env', 'backbone', 'underscore', 'hbs!template/SelectionOptionsPopup', '
         'width' : $container.width() + 4 + 'px'
       });
       this.$el.show();
+      this.$preview = this.$el.find('.message-preview');
     }
   });
 });
