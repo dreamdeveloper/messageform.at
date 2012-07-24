@@ -2,10 +2,13 @@ define([
   'backbone',
   'env',
   'jquery',
+  'underscore',
   'util/rangy',
   'hbs!template/base',
+  'model/SelectionOptions',
+  'view/SelectionOptions',
   'util/contentEditableChange'
-], function (Backbone, env, $, rangy, template) {
+], function (Backbone, env, $, _, rangy, template, SelectOptsModel, SelectOptsView ) {
   return Backbone.View.extend({
     initialize : function (options) {
       this.template = template;
@@ -13,6 +16,9 @@ define([
 
       // Handle highlights of text
       this.on('highlight', this.highlight, this);
+      this.on('textselect', this.showOptions, this);
+
+      env.set('locale', 'en_US');
     },
     options : {},
     events : {
@@ -21,7 +27,7 @@ define([
       'keyup #mf-input' : 'inputchange',
       'mouseup #mf-input' : 'highlight'
     },
-    inputchange : function (e) {
+    inputchange : _.debounce(function (e) {
       var $target = $(e.currentTarget);
       var val = $target.text();
 
@@ -33,7 +39,7 @@ define([
 
       // Constantly update the model
       this.model.set('message', val);
-    },
+    }, 500),
     inputfocus : function (e) {
       var $target = $(e.currentTarget);
 
@@ -63,18 +69,47 @@ define([
       this.$mfarea.css('padding-bottom', this.$mfarea.css('padding-top'));
       this.model.set('message', val);
     },
+    showOptions : function (fulltext, selectedtext, start, end) {
+      var self = this;
+
+      this.popupModel = new SelectOptsModel({
+        container : this.$mfarea,
+        fulltext : fulltext,
+        selectedtext : selectedtext,
+        start : start,
+        end : end
+      });
+
+      this.popupView = new SelectOptsView({
+        el : $('#popup-container'),
+        model : self.popupModel
+      });
+
+      this.popupView.render();
+    },
     highlight : function () {
-      console.log(rangy.getSelection().getRangeAt(0).toString());
+      // Get the currently selected text
+      try {
+        var range = rangy.getSelection().getRangeAt(0);
+
+        // Bail if it's just whitespace or nothing.
+        if (!$.trim(range.toString())) {
+          return;
+        }
+
+        this.trigger('textselect', this.$mfarea.text(), range.toString(), range.startOffset, range.endOffset);
+      }
+      catch (e) {
+        if (window.console && console.log) {
+          //console.log(e);
+        }
+      }
     },
     render : function () {
       var self = this;
       this.$el.html( this.template( this.model.toJSON() ) );
 
       this.$mfarea = this.$el.find('#mf-input');
-
-      /*this.$mfarea.on('mouseup keyup', function (e) {
-        self.trigger('highlight');
-      });*/
     }
   });
 });

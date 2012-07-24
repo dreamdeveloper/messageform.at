@@ -9,8 +9,37 @@
   font-size: 42px;
   line-height: 52px;
   border: 3px solid #ccc;
-  box-shadow: 0 0 5px #aaa;
+  box-shadow: 0 0 5px #efefef;
 }
 #mf-input.placeholder-on {
   color: #999;
+}
+#mf-input .accent {
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 4px;
+  margin: 2px;
+  font-size: 1.1em;
+}
+.selection-popup {
+  border: 1px #ccc solid;
+  padding: 10px;
+  position: absolute;
+  width: 200px;
+  background-color: #efefef;
+  outline: none;
+}
+.selection-popup .selected-header {
+  font-size: 2.5em;
+  text-align: center;
+  padding: 10px 5px;
+  line-height: 1em;
+}
+.selection-popup .selected-header .current-selected-callout {
+  font-weight: bold;
+}
+.selection-popup .message-type-header {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin: 10px 5px;
 }

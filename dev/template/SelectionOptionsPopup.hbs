@@ -1,0 +1,20 @@
+<div class="selection-popup" tabindex="-1">
+  <div class="selected-header">
+    Format | <span class="current-selected-callout">{{selectedtext}}</span>
+  </div>
+
+  <div class="mf-type-section">
+    <div class="message-type-header">
+      PluralForm
+    </div>
+
+    <label for="variable-name">Data Variable Name</label>
+    <input type="text" class="data-variable-option" id="variable-name" name="variable-name" />
+
+    {{#each plural_keywords}}
+    <label for="plural-{{keyword}}">{{keyword}} - (e.g.: {{#each nums}}{{.}} {{/each}})</label>
+    <input type="text" class="plural-option" data-plural-name="{{keyword}}" id="plural-{{keyword}}" name="plural-{{keyword}}" />
+    {{/each}}
+
+  </div>
+</div>
