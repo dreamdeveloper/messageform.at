@@ -1,13 +1,23 @@
 @import url("bootstrap.css");
-@import url("bootstrap-responsive.css");
+.navbar-inner {
+  background-color: #efefef;
+  background-image: none;
+  box-shadow: none;
+}
+.navbar .brand {
+  font-size: 70px;
+  text-shadow: 1px 1px 0 #fff;
+  color: #f22b48;
+  font-family: 'Neuton', serif;
+}
 #mf-input {
   display: block;
   width: 90%;
   height: auto;
-  margin: 60px 0;
+  margin: 120px 0;
   padding: 10px;
-  font-size: 42px;
-  line-height: 52px;
+  font-size: 32px;
+  line-height: 42px;
   border: 3px solid #ccc;
   box-shadow: 0 0 5px #efefef;
 }
