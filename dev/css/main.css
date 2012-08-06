@@ -6,7 +6,7 @@
 }
 .navbar .brand {
   font-size: 70px;
-  text-shadow: 1px 1px 0 #fff;
+  text-shadow: 1px 1px 0 #fff, 3px 3px 0 #ddd;
   color: #f22b48;
   font-family: 'Neuton', serif;
 }
