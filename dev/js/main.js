@@ -10,24 +10,37 @@ require({
     },
     'backbone' : {
       deps : ['underscore', 'jquery'],
-      exports : function (_, $) {
+      exports : function () {
+        // Handle getting rid of underscore here
+        // because it needs to be global for Backbone
         this._.noConflict();
         return this.Backbone.noConflict();
+      }
+    },
+    'diff' : {
+      exports : function () {
+        var JsDiff = this.JsDiff;
+        delete this.JsDiff;
+        return JsDiff;
       }
     }
   }
 },['env', 'backbone', 'view/App', 'model/App', 'jquery', 'util/caret'], function (env, Backbone, AppView, AppModel, $) {
 
-  var router;
-
   var AppRouter = Backbone.Router.extend({
     initialize : function () {},
 
     routes: {
-      '' : 'home'
+      '' : 'home',
+      'create' : 'create',
+      'translate' : ''
     },
 
     home : function () {
+
+    },
+
+    create : function () {
       // Initialize the model
       var model = new AppModel();
 
@@ -46,8 +59,7 @@ require({
           // on the environment object
           env.set({
             appModel : model,
-            appView : view,
-            appRouter : router
+            appView : view
           });
 
           // Render the view
@@ -58,7 +70,7 @@ require({
   });
 
   // Kick off the app router
-  router = new AppRouter();
+  env.set('router', new AppRouter());
 
   // Start everything
   Backbone.history.start();

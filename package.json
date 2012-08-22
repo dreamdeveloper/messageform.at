@@ -26,7 +26,8 @@
     "requirejs" : "2.0.x",
     "lodash" : "0.4.x",
     "stylus" : "*",
-    "jquery-browser" : "<2"
+    "jquery-browser" : "<2",
+    "diff" : "*"
   },
   "noAnalyze": true,
   "devDependencies": {

@@ -34,6 +34,13 @@
         this._.noConflict();
         return this.Backbone.noConflict();
       }
+    },
+    'diff' : {
+      exports : function () {
+        var JsDiff = this.JsDiff;
+        delete this.JsDiff;
+        return JsDiff;
+      }
     }
   }
 })

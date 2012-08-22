@@ -44,11 +44,16 @@
 .navbar .nav > li > a:hover {
   color: #f22b48;
 }
+#app-container {
+  display: block;
+  height: auto;
+  margin: 120px 0;
+}
 #mf-input {
   display: block;
   width: 90%;
   height: auto;
-  margin: 120px 0;
+  margin: 20px 0;
   padding: 10px;
   font-size: 32px;
   line-height: 42px;

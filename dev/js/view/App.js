@@ -107,6 +107,7 @@ define([
     },
     render : function () {
       var self = this;
+      console.log( this.template( this.model.toJSON() ));
       this.$el.html( this.template( this.model.toJSON() ) );
 
       this.$mfarea = this.$el.find('#mf-input');
