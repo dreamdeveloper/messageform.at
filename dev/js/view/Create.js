@@ -4,13 +4,12 @@ define([
   'jquery',
   'underscore',
   'util/rangy',
-  'hbs!template/base',
+  'diff',
+  'hbs!template/create',
   'model/SelectionOptions',
   'view/SelectionOptions',
-  'util/contentEditableChange',
-  'diff'
-], function (Backbone, env, $, _, rangy, template, SelectOptsModel, SelectOptsView, diff) {
-  console.log(diff.diffChars("23464", "23454"));
+  'util/contentEditableChange'
+], function (Backbone, env, $, _, rangy, diff, template, SelectOptsModel, SelectOptsView) {
   return Backbone.View.extend({
     initialize : function (options) {
       this.template = template;

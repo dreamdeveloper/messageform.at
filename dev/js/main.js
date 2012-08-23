@@ -19,13 +19,13 @@ require({
     },
     'diff' : {
       exports : function () {
-        console.log('asdfasdf');
-        console.log(this.JsDiff);
-        return this.JsDiff;
+        var JsDiff = this.JsDiff;
+        this.JsDiff = undefined;
+        return JsDiff;
       }
     }
   }
-},['env', 'backbone', 'view/App', 'model/App', 'jquery', 'util/caret'], function (env, Backbone, AppView, AppModel, $) {
+},['env', 'backbone', 'view/Create', 'model/Create', 'jquery', 'util/caret'], function (env, Backbone, CreateView, CreateModel, $) {
 
   var AppRouter = Backbone.Router.extend({
     initialize : function () {},
@@ -38,16 +38,20 @@ require({
     },
 
     home : function () {
-      alert('homepage is gone for now');
+      $('#app-container').html('home');
+    },
+
+    translate : function () {
+      $('#app-container').html('translate');
     },
 
     fourohfour : function (path) {
-      alert('page not found: ' + path);
+      $('#app-container').text('page `' + path + '` not found.');
     },
 
     create : function () {
       // Initialize the model
-      var model = new AppModel();
+      var model = new CreateModel();
 
       // Listen for the data
       model.bind('dataReady', function () {
@@ -55,7 +59,7 @@ require({
         $(function () {
 
           // Create a new view
-          var view = new AppView({
+          var view = new CreateView({
             model : model,
             el : '#app-container'
           });
@@ -72,6 +76,18 @@ require({
         });
       });
     }
+  });
+
+  $(function () {
+    $('.nav').find('li a').each(function () {
+      var href = this.getAttribute('href');
+      if (href && href.length && href.substr(0,1) === '#') {
+        $(this).click(function () {
+          env.get('router').navigate(href.substr(2), {trigger:true});
+          return false;
+        });
+      }
+    });
   });
 
   // Kick off the app router
