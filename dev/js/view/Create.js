@@ -18,8 +18,6 @@ define([
       // Handle highlights of text
       this.on('highlight', this.highlight, this);
       this.on('textselect', this.showOptions, this);
-
-      env.set('locale', 'en_US');
     },
     options : {},
     events : {

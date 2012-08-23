@@ -25,7 +25,13 @@ require({
       }
     }
   }
-},['env', 'backbone', 'view/Create', 'model/Create', 'jquery', 'util/caret'], function (env, Backbone, CreateView, CreateModel, $) {
+},[
+'env', 'backbone',
+'view/Create', 'model/Create',
+'view/Translate', 'model/Translate',
+'jquery', 'util/caret'
+], function (env, Backbone, CreateView, CreateModel, TranslateView, TranslateModel, $) {
+  env.set('locale', 'en_US');
 
   var AppRouter = Backbone.Router.extend({
     initialize : function () {},
@@ -42,7 +48,34 @@ require({
     },
 
     translate : function () {
-      $('#app-container').html('translate');
+      var model = env.get('translateModel') || new TranslateModel();
+
+      var whenReady = function () {
+        $(function () {
+          // Insantiate view
+          var view = env.get('translateView') || new TranslateView({
+            model : model,
+            el : '#app-container'
+          });
+
+          // Set the global state
+          env.set({
+            translateModel : model,
+            translateView : view
+          });
+
+          // Render view
+          view.render();
+        });
+      };
+
+      // Either reinject or inject for the first time
+      if (model.isReady) {
+        whenReady();
+      }
+      else {
+        model.bind('dataReady', whenReady);
+      }
     },
 
     fourohfour : function (path) {
@@ -51,15 +84,15 @@ require({
 
     create : function () {
       // Initialize the model
-      var model = new CreateModel();
+      var model = env.get('createModel') || new CreateModel();
 
       // Listen for the data
-      model.bind('dataReady', function () {
+      var whenReady = function () {
         // Make sure the dom is ready
         $(function () {
 
           // Create a new view
-          var view = new CreateView({
+          var view = env.get('createView') || new CreateView({
             model : model,
             el : '#app-container'
           });
@@ -67,14 +100,22 @@ require({
           // Save these two core models and views
           // on the environment object
           env.set({
-            appModel : model,
-            appView : view
+            createModel : model,
+            createView : view
           });
 
           // Render the view
           view.render();
         });
-      });
+      };
+
+      // Either reinject or inject for the first time
+      if (model.isReady) {
+        whenReady();
+      }
+      else {
+        model.bind('dataReady', whenReady);
+      }
     }
   });
 
