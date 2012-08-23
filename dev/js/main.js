@@ -78,12 +78,21 @@ require({
     }
   });
 
+  // Make the nav fire routes
   $(function () {
+    // Grab links in the nav
     $('.nav').find('li a').each(function () {
       var href = this.getAttribute('href');
+
+      // If they start with a hash
       if (href && href.length && href.substr(0,1) === '#') {
         $(this).click(function () {
+          var $this = $(this);
+          $this.closest('ul').find('.active').removeClass('active');
+          $this.closest('li').addClass('active');
+          // Fire a nav event on click
           env.get('router').navigate(href.substr(2), {trigger:true});
+          // Ignore everything else
           return false;
         });
       }
