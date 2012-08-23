@@ -19,9 +19,9 @@ require({
     },
     'diff' : {
       exports : function () {
-        var JsDiff = this.JsDiff;
-        delete this.JsDiff;
-        return JsDiff;
+        console.log('asdfasdf');
+        console.log(this.JsDiff);
+        return this.JsDiff;
       }
     }
   }
@@ -33,11 +33,16 @@ require({
     routes: {
       '' : 'home',
       'create' : 'create',
-      'translate' : ''
+      'translate' : 'translate',
+      '*path' : 'fourohfour'
     },
 
     home : function () {
+      alert('homepage is gone for now');
+    },
 
+    fourohfour : function (path) {
+      alert('page not found: ' + path);
     },
 
     create : function () {

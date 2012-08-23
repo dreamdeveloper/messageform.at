@@ -7,8 +7,10 @@ define([
   'hbs!template/base',
   'model/SelectionOptions',
   'view/SelectionOptions',
-  'util/contentEditableChange'
-], function (Backbone, env, $, _, rangy, template, SelectOptsModel, SelectOptsView ) {
+  'util/contentEditableChange',
+  'diff'
+], function (Backbone, env, $, _, rangy, template, SelectOptsModel, SelectOptsView, diff) {
+  console.log(diff.diffChars("23464", "23454"));
   return Backbone.View.extend({
     initialize : function (options) {
       this.template = template;
@@ -107,7 +109,6 @@ define([
     },
     render : function () {
       var self = this;
-      console.log( this.template( this.model.toJSON() ));
       this.$el.html( this.template( this.model.toJSON() ) );
 
       this.$mfarea = this.$el.find('#mf-input');
