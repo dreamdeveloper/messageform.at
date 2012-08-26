@@ -1,3 +1,5 @@
+appWidth = 940px
+
 .navbar-inner
   background-color #EFEFEF
   background-image none
@@ -90,3 +92,23 @@
     font-size 1.8em
     font-weight bold
     margin 10px 5px
+
+.translate-message-list
+  list-style-type none
+  padding 0
+  margin 0
+  width appWidth
+
+  .translate-message-group
+    position relative
+
+    .translate-message-orig
+      float left
+      width (appWidth/2) - 21
+      padding 10px
+      border-right 1px solid #333
+
+    .translate-message-target
+      float left
+      width (appWidth/2) - 20
+      padding 10px

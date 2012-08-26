@@ -92,3 +92,25 @@
   font-weight: bold;
   margin: 10px 5px;
 }
+.translate-message-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 940px;
+}
+.translate-message-list .translate-message-group {
+  position: relative;
+  height: auto;
+  zoom: 1;
+}
+.translate-message-list .translate-message-group .translate-message-orig {
+  float: left;
+  width: 449px;
+  padding: 10px;
+  border-right: 1px solid #333;
+}
+.translate-message-list .translate-message-group .translate-message-target {
+  float: left;
+  width: 450px;
+  padding: 10px;
+}
