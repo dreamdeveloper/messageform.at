@@ -1,16 +1,27 @@
-define(['backbone'], function (Backbone) {
+define(['backbone', 'collection/Messages'], function (Backbone, Messages) {
   return Backbone.Model.extend({
     initialize : function (options) {
       var self = this;
-      this.set({data:1});
 
       this.on('dataReady', function () {
-        this.isReady = true;
+        self.isReady = true;
       }, this);
 
-      setTimeout(function () {
+      // Instantiate message queue data dependency
+      var messages = new Messages();
+      messages.on('dataReady', function () {
+        self.set('messages', messages);
         self.trigger('dataReady');
-      }, 0);
+      });
+
+      // Make a request for data
+      messages.fetch();
+    },
+
+    toJSON : function () {
+      var res = Backbone.Model.prototype.toJSON.apply(this, arguments);
+      res.messages = this.get('messages').toJSON();
+      return res;
     }
   });
 });

@@ -77,25 +77,28 @@ define(['env', 'backbone', 'underscore', 'hbs!template/SelectionOptionsPopup', '
 
       var tryCompile = fulltext.substr(0, start) + self.buildPluralForm() + fulltext.substr(end);
 
-      var message = this.mf.compile(tryCompile);
-      var mfVars = mfi.getVariables(tryCompile);
-      var variables = mfVars.plural;
-      var nums = this.getRelevantNumbers(this.calculateKeys());
+      try {
+        var message = this.mf.compile(tryCompile);
+        var mfVars = mfi.getVariables(tryCompile);
+        var variables = mfVars.plural;
+        var nums = this.getRelevantNumbers(this.calculateKeys());
 
-      var datasets = [];
-      _(this.permutate(variables.length, nums)).forEach(function (vals) {
-        var data = {};
-        _(variables).forEach(function (vari, idx) {
-          data[vari] = vals[idx];
+        var datasets = [];
+        _(this.permutate(variables.length, nums)).forEach(function (vals) {
+          var data = {};
+          _(variables).forEach(function (vari, idx) {
+            data[vari] = vals[idx];
+          });
+          datasets.push(data);
         });
-        datasets.push(data);
-      });
 
-      var renderedMessages = _(datasets).map(function (data) {
-        return message(data);
-      });
+        var renderedMessages = _(datasets).map(function (data) {
+          return message(data);
+        });
 
-      this.$preview.html(previewTemplate({ messages : renderedMessages }));
+        this.$preview.html(previewTemplate({ messages : renderedMessages }));
+      }
+      catch (e) {}
 
     }, 400),
 

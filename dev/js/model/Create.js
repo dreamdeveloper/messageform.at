@@ -5,7 +5,7 @@ define(['backbone'], function (Backbone) {
       this.set({data:1});
 
       this.on('dataReady', function () {
-        this.isReady = true;
+        self.isReady = true;
       }, this);
 
       setTimeout(function () {
