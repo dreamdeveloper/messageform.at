@@ -28,6 +28,23 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
             description : "The gender of the person who should be writing the content.",
             type : "select"
           }]
+        },
+        {
+          key : "writeContent",
+          message : "{CONTENTCOUNT, plural, =0 {Be the first to a} other {A}}sk a question.",
+          lang : "en",
+          md5 : "d8132f4341aed7dff3562edc1b77f3b3",
+          contentType : "answer",
+          description : "The call to action on the main submission buttons.",
+          variables : [{
+            name : "CONTENTCOUNT",
+            description : "The amount of content that currently exists for the subject.",
+            type : "plural"
+          }, {
+            name : "GENDER",
+            description : "The gender of the person who should be writing the content.",
+            type : "select"
+          }]
         }]);
 
         // Trigger dataReady

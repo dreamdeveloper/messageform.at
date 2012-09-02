@@ -3,12 +3,7 @@
 <ul class="translate-message-list">
   {{#each messages}}
   <li class="translate-message-group">
-    <div class="translate-message-orig">
-      {{key}} - {{message}}
-    </div>
-    <div class="translate-message-target">
-      ???
-    </div>
+    {{> template_message .}}
   </li>
   {{/each}}
 </ul>

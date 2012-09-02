@@ -1,7 +1,14 @@
-define(['backbone', 'collection/Messages'], function (Backbone, Messages) {
+define(['backbone', 'underscore', '$', 'collection/Messages'], function (Backbone, _, $, Messages) {
   return Backbone.Model.extend({
+    options : {
+      fromLang : 'en',
+      toLang : 'es'
+    },
+
     initialize : function (options) {
       var self = this;
+
+      this.set(_.extend(this.options, options));
 
       this.on('dataReady', function () {
         self.isReady = true;
@@ -19,7 +26,7 @@ define(['backbone', 'collection/Messages'], function (Backbone, Messages) {
     },
 
     toJSON : function () {
-      var res = Backbone.Model.prototype.toJSON.apply(this, arguments);
+      var res = this.__super__.toJSON.apply(this, arguments);
       res.messages = this.get('messages').toJSON();
       return res;
     }

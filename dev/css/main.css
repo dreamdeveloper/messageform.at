@@ -100,6 +100,15 @@
 }
 .translate-message-list .translate-message-group {
   position: relative;
+  *zoom: 1;
+}
+.translate-message-list .translate-message-group:before,
+.translate-message-list .translate-message-group:after {
+  display: table;
+  content: "";
+}
+.translate-message-list .translate-message-group:after {
+  clear: both;
 }
 .translate-message-list .translate-message-group .translate-message-orig {
   float: left;
