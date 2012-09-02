@@ -100,8 +100,6 @@
 }
 .translate-message-list .translate-message-group {
   position: relative;
-  height: auto;
-  zoom: 1;
 }
 .translate-message-list .translate-message-group .translate-message-orig {
   float: left;
