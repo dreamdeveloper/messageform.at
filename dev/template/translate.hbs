@@ -1,5 +1,20 @@
 <h2>Messages</h2>
 
+<div class="translate-options">
+  <div class="translate-option-from">
+    Translating from: en
+  </div>
+  <div class="translate-option-to">
+    Translating to:
+    <select name="translate-option-to" id="translate-to">
+      <option value="{{toLang}}" selected>{{toLang}}</option>
+      <option disabled>---------</option>
+      {{#each locales}}
+        <option value="{{.}}">{{.}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
 <ul class="translate-message-list">
   {{#each messages}}
   <li class="translate-message-group">

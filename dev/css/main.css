@@ -121,3 +121,22 @@
   width: 450px;
   padding: 10px;
 }
+.translate-options {
+  *zoom: 1;
+  padding: 20px 0;
+  border-bottom: 1px solid #999;
+  background-color: #e5e5e5;
+}
+.translate-options:before,
+.translate-options:after {
+  display: table;
+  content: "";
+}
+.translate-options:after {
+  clear: both;
+}
+.translate-options > div {
+  width: 46%;
+  padding: 2%;
+  float: left;
+}

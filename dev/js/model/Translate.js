@@ -1,4 +1,4 @@
-define(['backbone', 'underscore', '$', 'collection/Messages'], function (Backbone, _, $, Messages) {
+define(['backbone', 'underscore', 'jquery', 'collection/Messages', 'messageformat'], function (Backbone, _, $, Messages, MessageFormat) {
   return Backbone.Model.extend({
     options : {
       fromLang : 'en',
@@ -16,18 +16,35 @@ define(['backbone', 'underscore', '$', 'collection/Messages'], function (Backbon
 
       // Instantiate message queue data dependency
       var messages = new Messages();
-      messages.on('dataReady', function () {
+
+      function handleMessages () {
+        messages.each(function (msg) {
+          // Set or override the variable combinations
+          msg.set('varComboniations', msg.significantVariableCombos(self.get('toLang')));
+        });
+
+        // Save the messages along with their combos
         self.set('messages', messages);
+
+        // Once we get combinations in, the data is ready
         self.trigger('dataReady');
-      });
+      }
+
+      // When we get new messages, handle them
+      messages.on('dataReady', handleMessages);
+
+      // Also do it again if we switch langs
+      this.on("change:toLang", handleMessages);
 
       // Make a request for data
       messages.fetch();
     },
 
     toJSON : function () {
-      var res = this.__super__.toJSON.apply(this, arguments);
+      var res = Backbone.Model.prototype.toJSON.apply(this, arguments);
       res.messages = this.get('messages').toJSON();
+      res.locales = _.keys(MessageFormat.locale);
+      console.log(res);
       return res;
     }
   });
