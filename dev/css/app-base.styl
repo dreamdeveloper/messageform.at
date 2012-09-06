@@ -113,15 +113,35 @@ appWidth = 940px
     clearfix()
 
     .translate-message-orig
-      float left
-      width (appWidth/2) - 21
       padding 10px
-      border-right 1px solid #333
+      border-bottom 1px solid #999
+      margin-bottom 10px
+      background-color #F0F0F0
+      clearfix()
+
+      .actual-message
+        font-size 24px
+        font-weight normal
+        padding 10px 0
 
     .translate-message-target
-      float left
-      width (appWidth/2) - 20
       padding 10px
+      border-bottom 1px solid #999
+
+    .var-combination
+      border-bottom 1px solid #EEEEEE
+      padding 4px 0
+      margin 4px 0
+
+    .var-combination-translation-field
+      padding 5px
+      width 100%
+      margin 10px 0
+
+    .var-combination-list
+      list-style-type none
+      padding 0
+      margin 0
 
 .translate-options
   clearfix()
@@ -133,3 +153,41 @@ appWidth = 940px
   width 46%
   padding 2%
   float left
+
+.quick-note
+  font-size 10px
+  color #555
+
+dt
+  margin-top 20px
+  padding-bottom 10px
+  font-size 20px
+
+dd
+  padding 0
+  margin 0
+
+.variable-definition-group
+  padding-left 10px
+  color #555
+
+.variable-definition-group > dt
+  border-top 1px solid #CCC
+  padding-top 5px
+  font-size 16px
+  color #333
+
+.variable-definition-group dt
+  margin-top 5px
+  padding-bottom 2px
+  font-size 14px
+
+.variable-definition-group dl
+  margin 5px 0
+
+.english-message-instance
+  font-size 24px
+  padding 10px 0
+
+.var-values
+  color #555

@@ -111,15 +111,43 @@
   clear: both;
 }
 .translate-message-list .translate-message-group .translate-message-orig {
-  float: left;
-  width: 449px;
   padding: 10px;
-  border-right: 1px solid #333;
+  border-bottom: 1px solid #999;
+  margin-bottom: 10px;
+  background-color: #f0f0f0;
+  *zoom: 1;
+}
+.translate-message-list .translate-message-group .translate-message-orig:before,
+.translate-message-list .translate-message-group .translate-message-orig:after {
+  display: table;
+  content: "";
+}
+.translate-message-list .translate-message-group .translate-message-orig:after {
+  clear: both;
+}
+.translate-message-list .translate-message-group .translate-message-orig .actual-message {
+  font-size: 24px;
+  font-weight: normal;
+  padding: 10px 0;
 }
 .translate-message-list .translate-message-group .translate-message-target {
-  float: left;
-  width: 450px;
   padding: 10px;
+  border-bottom: 1px solid #999;
+}
+.translate-message-list .translate-message-group .var-combination {
+  border-bottom: 1px solid #eee;
+  padding: 4px 0;
+  margin: 4px 0;
+}
+.translate-message-list .translate-message-group .var-combination-translation-field {
+  padding: 5px;
+  width: 100%;
+  margin: 10px 0;
+}
+.translate-message-list .translate-message-group .var-combination-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 .translate-options {
   *zoom: 1;
@@ -139,4 +167,42 @@
   width: 46%;
   padding: 2%;
   float: left;
+}
+.quick-note {
+  font-size: 10px;
+  color: #555;
+}
+dt {
+  margin-top: 20px;
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+dd {
+  padding: 0;
+  margin: 0;
+}
+.variable-definition-group {
+  padding-left: 10px;
+  color: #555;
+}
+.variable-definition-group > dt {
+  border-top: 1px solid #ccc;
+  padding-top: 5px;
+  font-size: 16px;
+  color: #333;
+}
+.variable-definition-group dt {
+  margin-top: 5px;
+  padding-bottom: 2px;
+  font-size: 14px;
+}
+.variable-definition-group dl {
+  margin: 5px 0;
+}
+.english-message-instance {
+  font-size: 24px;
+  padding: 10px 0;
+}
+.var-values {
+  color: #555;
 }

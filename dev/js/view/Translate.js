@@ -11,7 +11,12 @@ define([
     initialize : function (options) {
       this.template = template;
     },
-    events : {},
+    events : {
+      'change #translate-to' : 'setToLang'
+    },
+    setToLang : function (e) {
+      this.model.set('toLang', e.target.value);
+    },
     render : function () {
       this.$el.html( this.template( this.model.toJSON() ) );
     }

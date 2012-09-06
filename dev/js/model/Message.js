@@ -1,7 +1,6 @@
 define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbone, _, MessageFormat /*, locales */) {
   return Backbone.Model.extend({
-    initialize : function () {
-    },
+    initialize : function () {},
 
     significantVariableCombos : function (locale) {
       var self = this;
@@ -23,6 +22,7 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
           // the keyword, an example and the type
           _(nums).forEach(function (num) {
             allNums.push({
+              key : variable.name,
               type : 'plural',
               keyword : localeMF.pluralFunc(num),
               example : num,
@@ -32,6 +32,7 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
 
           _(variable.options).forEach(function (option) {
             allNums.push({
+              key : variable.name,
               type : 'plural',
               keyword : '=' + option,
               example : option,
@@ -46,6 +47,7 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
         else if (variable.type === 'select') {
           variable.values = _(variable.options || []).map(function (value) {
             return {
+              key : variable.name,
               type : 'select',
               keyword : value,
               example : value,
@@ -53,6 +55,7 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
             };
           });
           variable.values.push({
+            key : variable.name,
             type : 'select',
             keyword : 'other',
             example : 'unkown',

@@ -20,7 +20,7 @@ define(['backbone', 'underscore', 'jquery', 'collection/Messages', 'messageforma
       function handleMessages () {
         messages.each(function (msg) {
           // Set or override the variable combinations
-          msg.set('varComboniations', msg.significantVariableCombos(self.get('toLang')));
+          msg.set('varCombinations', msg.significantVariableCombos(self.get('toLang')));
         });
 
         // Save the messages along with their combos
