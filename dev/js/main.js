@@ -44,7 +44,7 @@ require({
     },
 
     home : function () {
-      $('#app-container').html('home');
+      $('#app-container').html('<h2>Choose to either Translate or Create messageformat messages in the navigation</h2>');
     },
 
     translate : function () {
