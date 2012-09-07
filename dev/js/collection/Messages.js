@@ -12,7 +12,7 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
     fetch : function () {
       var self = this;
       setTimeout(function () {
-        self.reset([{
+        self.reset([/*{
           key : "messageCountAlert",
           message : "You have {NUMMSG, plural, one {1 new message} other {# new messages}}.",
           lang : "en",
@@ -48,27 +48,32 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
             type : "select",
             options : ['male', 'female']
           }]
-        }
-        /*,{
-          key : "writeContent",
-          message : "{CONTENTCOUNT, plural, =0 {Be the first to ask} other {Ask}} a question.",
+        },*/
+        {
+          key : "groupAdd",
+          message : "{PERSON} added {PLURAL_NUM_PEOPLE, plural, offset:1 =0 {no one} =1 {just {GENDER, select, male {him} female {her} other{them}}self} one {{GENDER, select, male {him} female {her} other{them}}self and one other person} other {{GENDER, select, male {him} female {her} other{them}}self and # other people}} to {GENDER, select, male {his} female {her} other {their}} group.",
           lang : "en",
-          md5 : "f6dd2459ff3eaa36698d9b0809823f1b",
-          contentType : "answer",
-          description : "The call to action on the main submission buttons.",
+          md5 : "a532ecff44676ac817890b437f6714c9",
+          contentType : null,
+          description : "This message shows up as a status on a user's profile badge and indicates the 'adding to group' related actions of a user.",
           variables : [{
-            name : "CONTENTCOUNT",
-            description : "The amount of content that currently exists for the subject.",
+            name : "PERSON",
+            description : "The name of the person who did this stuff.",
+            type : 'replacement',
+            example : 'Pat'
+          },{
+            name : "PLURAL_NUM_PEOPLE",
+            description : "The amount of content that currently exists for the subject. NOTE:: There is an offset of 1, since the total count includes the user.",
             type : "plural",
-            options : [0]
+            offset : 1,
+            options : [0, 1]
           }, {
             name : "GENDER",
-            description : "The gender of the person who should be writing the content.",
+            description : "The gender of the person who added someone to their group.",
             type : "select",
             options : ['male', 'female']
           }]
-        },*/
-        ]);
+        }]);
 
         // Trigger dataReady
         self.trigger('dataReady');

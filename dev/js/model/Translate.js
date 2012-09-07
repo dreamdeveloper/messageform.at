@@ -44,7 +44,6 @@ define(['backbone', 'underscore', 'jquery', 'collection/Messages', 'messageforma
       var res = Backbone.Model.prototype.toJSON.apply(this, arguments);
       res.messages = this.get('messages').toJSON();
       res.locales = _.keys(MessageFormat.locale);
-      console.log(res);
       return res;
     }
   });

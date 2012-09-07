@@ -25,7 +25,7 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
               key : variable.name,
               type : 'plural',
               keyword : localeMF.pluralFunc(num),
-              example : num,
+              example : num + (variable.offset || 0),
               explicit : false
             });
           });
@@ -61,6 +61,15 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
             example : 'unkown',
             explicit : false
           });
+        }
+        else if (variable.type === 'replacement') {
+          variable.values = [{
+            key : variable.name,
+            type : 'replacement',
+            keyword : variable.name,
+            example : variable.example,
+            explicit : false
+          }];
         }
       });
 

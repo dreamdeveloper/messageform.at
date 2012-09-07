@@ -17,6 +17,9 @@
         <dt>{{name}}</dt>
         <dl><dt>Type</dt><dd>{{type}}<dd></dl>
         <dl><dt>Description</dt><dd>{{description}}</dd></dl>
+        {{#if offset}}
+        <dl><dt>Offset</dt><dd>{{offset}} <span class="quick-note">(This is is subtracted for keywords, but not for explicit numbers)</span></dd></dl>
+        {{/if}}
       {{/each}}
       </dl>
     </dd>
@@ -29,12 +32,18 @@
     <div class="english-message-instance"><strong>English:</strong> {{mfenglish ../message .}}</div>
     {{! go through each of the combos }}
     <div class="var-values">
-    {{#each .}}
-      <strong>{{key}}</strong>: {{keyword}}
+      {{#each .}}
+      <strong>{{key}}</strong>:
+      {{#ifEquals type "replacement"}}
+        {{example}}
+        <span class="quick-note">(but use {<span>{{key}}</span>})</span>
+      {{else}}
+        {{keyword}}
+      {{/ifEquals}}
       {{#ifEquals type "plural"}}
         <span class="quick-note">(Ex: <strong>{{example}}</strong>, but use <strong>#</strong>)</span>
-        </br >
       {{/ifEquals}}
+      <br />
     {{/each}}
     </div>
       <textarea class="var-combination-translation-field" type="text" placeholder="Translate the setence based on the data."></textarea>
