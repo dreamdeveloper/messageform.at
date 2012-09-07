@@ -13,8 +13,15 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
       var nums = this.getRelevantNumbers(this.calculateKeys(localeMF));
       var datasets = [];
 
+      var ignores = [];
+
       _(potentials).forEach(function (variable, idx) {
         var allNums = [];
+
+        if (_(variable.ignore).contains(locale)) {
+          ignores.push(idx);
+          return;
+        }
 
         // Add in the explicit numbers for a plural case
         if (variable.type === 'plural') {
@@ -73,9 +80,16 @@ define(['backbone', 'underscore', 'messageformat', 'locales'], function (Backbon
         }
       });
 
+      var filteredPotentials = _.clone(potentials);
+      _(ignores).forEach(function (ignoreIdx) {
+        filteredPotentials[ignoreIdx] = undefined;
+      });
+
+      filteredPotentials = _(filteredPotentials).compact();
+
       // We need to do some cloning - so modifying this array in permutate
       // won't modify the stored values in this.variables, etc
-      return this.permutate(_.clone(potentials));
+      return this.permutate(filteredPotentials);
     },
     getRelevantNumbers : function (keySet) {
       var res = [];

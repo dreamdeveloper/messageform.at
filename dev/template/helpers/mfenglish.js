@@ -5,7 +5,15 @@ define(['handlebars', 'messageformat', 'underscore'], function (Handlebars, Mess
     _(data).forEach(function (variable) {
       realData[variable.key] = variable.example;
     });
-    return mf.compile(message)(realData);
+    var res;
+
+    try {
+      res = mf.compile(message)(realData);
+    }
+    catch (e) {
+      res = "*Not enough data to render english.*";
+    }
+    return res;
   }
 
   Handlebars.registerHelper('mfenglish', mfenglish);

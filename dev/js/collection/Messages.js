@@ -1,4 +1,4 @@
-define(['backbone', 'model/Message'], function (Backbone, Message) {
+define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Message) {
   return Backbone.Collection.extend({
     model : Message,
     initialize : function (options) {
@@ -9,10 +9,28 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
       }, this);
     },
 
+    ignore : function (hash, varname, locale) {
+      this.each(function (msg) {
+        var dirty = false;
+        if (msg.get('md5') === hash) {
+          _(msg.get('variables')).forEach(function (variable) {
+            if (variable.name === varname) {
+              variable.ignore = variable.ignore || [];
+              variable.ignore.push(locale);
+              dirty = true;
+            }
+          });
+          if (dirty) {
+            msg.set('varCombinations', msg.significantVariableCombos(locale));
+          }
+        }
+      });
+    },
+
     fetch : function () {
       var self = this;
       setTimeout(function () {
-        self.reset([/*{
+        self.reset([{
           key : "messageCountAlert",
           message : "You have {NUMMSG, plural, one {1 new message} other {# new messages}}.",
           lang : "en",
@@ -29,7 +47,7 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
             type : "select",
             options : ['male', 'female']
           }]
-        },
+        }/*,
         {
           key : "writeContent",
           message : "{CONTENTCOUNT, plural, =0 {Be the first to write} other {Write}} a review.",
@@ -48,7 +66,7 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
             type : "select",
             options : ['male', 'female']
           }]
-        },*/
+        },
         {
           key : "groupAdd",
           message : "{PERSON} added {PLURAL_NUM_PEOPLE, plural, offset:1 =0 {no one} =1 {just {GENDER, select, male {him} female {her} other{them}}self} one {{GENDER, select, male {him} female {her} other{them}}self and one other person} other {{GENDER, select, male {him} female {her} other{them}}self and # other people}} to {GENDER, select, male {his} female {her} other {their}} group.",
@@ -73,7 +91,7 @@ define(['backbone', 'model/Message'], function (Backbone, Message) {
             type : "select",
             options : ['male', 'female']
           }]
-        }]);
+        }*/]);
 
         // Trigger dataReady
         self.trigger('dataReady');

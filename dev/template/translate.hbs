@@ -18,7 +18,63 @@
 <ul class="translate-message-list">
   {{#each messages}}
   <li class="translate-message-group">
-    {{> template_message .}}
+    <div class="translate-message-orig">
+      <h3 class="actual-message">{{message}}</h3>
+      <dl>
+        <dt>Key</dt>
+        <dd>{{key}}</dd>
+
+        <dt>Content Type</dt>
+        <dd>{{#if contentType}}{{contentType}}{{else}}Generic{{/if}}</dd>
+
+        <dt>Description</dt>
+        <dd>{{description}}</dd>
+
+        <dt>Variables</dt>
+        <dd>
+          <dl class="variable-definition-group">
+          {{#each variables}}
+          {{#ifContains ../../toLang ignore}}
+          {{else}}
+          <dt>{{name}} <span class="ignore-link">[<a class="ignore-variable" data-variable="{{name}}" data-md5="{{../../md5}}" href="#">ignore</a>]</span></dt>
+            <dl><dt>Type</dt><dd>{{type}}<dd></dl>
+            <dl><dt>Description</dt><dd>{{description}}</dd></dl>
+            {{#if offset}}
+            <dl><dt>Offset</dt><dd>{{offset}} <span class="quick-note">(This is is subtracted for keywords, but not for explicit numbers)</span></dd></dl>
+            {{/if}}
+          {{/ifContains}}
+          {{/each}}
+          </dl>
+        </dd>
+      </dl>
+    </div>
+    <div class="translate-message-target">
+      <ul class="var-combination-list">
+      {{#each varCombinations}}
+      <li class="var-combination">
+        <div class="english-message-instance"><strong>English:</strong> {{mfenglish ../message .}}</div>
+        {{! go through each of the combos }}
+        <div class="var-values">
+          {{#each .}}
+          <strong>{{key}}</strong>:
+          {{#ifEquals type "replacement"}}
+            {{example}}
+            <span class="quick-note">(but use {<span>{{key}}</span>})</span>
+          {{else}}
+            {{keyword}}
+          {{/ifEquals}}
+          {{#ifEquals type "plural"}}
+            <span class="quick-note">(Ex: <strong>{{example}}</strong>, but use <strong>#</strong>)</span>
+          {{/ifEquals}}
+          <br />
+        {{/each}}
+        </div>
+          <textarea class="var-combination-translation-field" type="text" placeholder="Translate the sentence based on the data."></textarea>
+        </li>
+      {{/each}}
+      </ul>
+    </div>
+
   </li>
   {{/each}}
 </ul>
