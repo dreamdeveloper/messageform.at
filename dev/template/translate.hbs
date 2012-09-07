@@ -30,6 +30,11 @@
         <dt>Description</dt>
         <dd>{{description}}</dd>
 
+        <dt>Photo Context</dt>
+        {{#each photos}}
+        <dd><a target="_blank" href="{{.}}"><img src="{{.}}" alt="" style="max-width:200px;max-height:200px;" /></a></dd>
+        {{/each}}
+
         <dt>Variables</dt>
         <dd>
           <dl class="variable-definition-group">
@@ -73,6 +78,10 @@
         </li>
       {{/each}}
       </ul>
+      <div class="action-container">
+        <button class="submit-translation">Submit Translation</button>
+        <a href="#">cancel</a>
+      </div>
     </div>
 
   </li>

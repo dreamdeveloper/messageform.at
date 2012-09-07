@@ -37,6 +37,7 @@ define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Messa
           md5 : "c518d90b85481802103ea7c52ce9a7db",
           contentType : null,
           description : "This is an alert at the top of the page when a user logs in that tells them how many new messages they've got since the last time they logged in.",
+          photos : ['https://img.skitch.com/20120907-rue7qbdfpxrrdgbptpesftbtti.jpg'],
           variables : [{
             name : "NUMMSG",
             description : "The number of messages they've received.",
@@ -47,7 +48,7 @@ define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Messa
             type : "select",
             options : ['male', 'female']
           }]
-        }/*,
+        },
         {
           key : "writeContent",
           message : "{CONTENTCOUNT, plural, =0 {Be the first to write} other {Write}} a review.",
@@ -55,6 +56,7 @@ define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Messa
           md5 : "a2420a393c32e137d4072c2a9e38e7fe",
           contentType : "review",
           description : "The call to action on the main submission buttons. In this case we're not using the plural form on CONTENTCOUNT for pluralization, but just changing things when there are no reviews.",
+          photos : ['https://img.skitch.com/20120907-cj6qufdi19wy3afif717q3b6t2.jpg'],
           variables : [{
             name : "CONTENTCOUNT",
             description : "The amount of content that currently exists for the subject.",
@@ -74,6 +76,7 @@ define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Messa
           md5 : "a532ecff44676ac817890b437f6714c9",
           contentType : null,
           description : "This message shows up as a status on a user's profile badge and indicates the 'adding to group' related actions of a user.",
+          photos : ['https://img.skitch.com/20120907-jm7mpftt1cbrc9tnhiiqghf7ea.jpg'],
           variables : [{
             name : "PERSON",
             description : "The name of the person who did this stuff.",
@@ -91,7 +94,7 @@ define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Messa
             type : "select",
             options : ['male', 'female']
           }]
-        }*/]);
+        }]);
 
         // Trigger dataReady
         self.trigger('dataReady');

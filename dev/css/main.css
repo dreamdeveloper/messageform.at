@@ -210,3 +210,10 @@ dd {
   font-size: 10px;
   font-weight: normal;
 }
+.action-container {
+  padding: 20px;
+  background-color: #b5b5b5;
+}
+.action-container button {
+  float: right;
+}
