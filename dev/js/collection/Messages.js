@@ -81,7 +81,7 @@ define(['backbone', 'underscore', 'model/Message'], function (Backbone, _, Messa
             name : "PERSON",
             description : "The name of the person who did this stuff.",
             type : 'replacement',
-            example : 'Pat'
+            example : '{PERSON}'
           },{
             name : "PLURAL_NUM_PEOPLE",
             description : "The amount of content that currently exists for the subject. NOTE:: There is an offset of 1, since the total count includes the user.",
